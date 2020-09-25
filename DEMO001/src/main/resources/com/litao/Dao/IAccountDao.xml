@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litao.Dao.IAccountDao">
+
+    <!--定义封装account和user的resultMap-->
+    <resultMap id="accountuser" type="Account">
+        <id property="ID" column="ID"/>
+        <result property="MONEY" column="MONEY"/>
+        <result property="UID" column="UID"/>
+        <!--一对一的关系映射，配置封装user的内容-->
+     <!--   <association property="user" javaType="User" column="UID">
+            &lt;!&ndash;主键&ndash;&gt;
+            <id property="id" column="id"/>
+            &lt;!&ndash;非主键&ndash;&gt;
+            <result property="username" column="username"/>
+            <result property="birthday" column="birthday"/>
+            <result property="sex" column="sex"/>
+            <result property="address" column="address"/>
+        </association>-->
+        <!--延迟加载-->
+        <association property="user" javaType="User" column="UID" select="com.litao.Dao.IUserDao.findById"></association>
+
+    </resultMap>
+    <sql id="defaultSelect">
+        select *from account
+    </sql>
+    <!--延迟加载-->
+    <select id="findAll" resultMap="accountuser">
+        select * from account
+    </select>
+
+    <!--<select id="findAll" resultMap="accountuser">
+        select u.*,a.id as AID,a.UID,a.MONEY from user u ,account a where a.UID=u.id;
+    </select>-->
+
+    <select id="findAccount" resultType="AccountUser">
+        SELECT a.*,u.username,u.address from account a left join user u on a.UID=u.id;
+    </select>
+
+
+</mapper>
