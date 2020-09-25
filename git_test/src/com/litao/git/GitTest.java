@@ -17,4 +17,7 @@ public class GitTest {
         System.out.println("----------------添加记录7--------------");
         System.out.println("----------------添加记录8--------------");
     }
+    public void test(){
+        System.out.println(123);
+    }
 }
