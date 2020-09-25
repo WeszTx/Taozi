@@ -6,4 +6,5 @@ package com.litao.git;
  * @Date 2020/9/25 17:16
  */
 public class user {
+    int id;
 }
